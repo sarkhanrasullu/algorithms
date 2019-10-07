@@ -3,7 +3,9 @@ package unionfind;
 public class  QuickFindUF implements UnionFindI {
 
     private int[] id;
-
+    public int[] getArr(){
+        return id;
+    }
     public QuickFindUF(int n){
         this.id = new int[n];
         int[] id_ = this.id;

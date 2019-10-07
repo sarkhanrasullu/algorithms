@@ -1,17 +1,16 @@
 package unionfind;
 
-public class QuickUnionUF implements UnionFindI {
+public class QuickUnionWeightedUF implements UnionFindI {
 
     private int[] id;
+    private int[] sz;
 
-    public int[] getArr(){
-        return id;
-    }
-    public QuickUnionUF(int n){
+    public QuickUnionWeightedUF(int n){
         this.id = new int[n];
-        int[] id_ = this.id;
+        this.sz = new int[n];
         for(int i=0;i<n;i++){
-            id_[i] = i;
+            this.id[i] = i;
+            this.sz[i] = 1;
         }
     }
 
@@ -20,7 +19,9 @@ public class QuickUnionUF implements UnionFindI {
         while(i != id_[i]) i = id_[i];
         return i;
     }
-
+    public int[] getArr(){
+        return id;
+    }
     @Override
     public boolean connected(int p, int q) {
         return root(p) == root(q);
@@ -30,7 +31,11 @@ public class QuickUnionUF implements UnionFindI {
     public void union(int p, int q) {
         int i = root(p);
         int j = root(q);
-
-        id[i] = j;
+        if( i == j ) return;
+        if( sz[i]<sz[j] ) {
+            id[i] = j; sz[j] += sz[i];
+        } else {
+            id[j] = i; sz[i] += sz[j];
+        }
     }
 }

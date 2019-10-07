@@ -1,23 +1,26 @@
 package unionfind;
 
-public class QuickUnionUF implements UnionFindI {
+public class QuickUnionWithPathCompressionUF implements UnionFindI {
 
     private int[] id;
 
-    public int[] getArr(){
-        return id;
-    }
-    public QuickUnionUF(int n){
+    public QuickUnionWithPathCompressionUF(int n){
         this.id = new int[n];
         int[] id_ = this.id;
         for(int i=0;i<n;i++){
             id_[i] = i;
         }
     }
+    public int[] getArr(){
+        return id;
+    }
 
     private int root(int i ){
         int[] id_ = this.id;
-        while(i != id_[i]) i = id_[i];
+        while(i != id_[i]) {
+            id[i] = id[id[i]];
+            i = id_[i];
+        }
         return i;
     }
 
